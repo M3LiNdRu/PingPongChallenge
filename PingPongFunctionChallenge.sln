@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.35
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PingPongFunctionApp", "PingPongFunctionApp\PingPongFunctionApp.csproj", "{5822CE08-ECE5-485E-8357-03C75B17C465}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{8C3A381E-400A-4BE4-B09E-F86124B8CF59}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pipeline", "pipeline", "{14ED2F59-B324-4EC4-B840-328B00D43779}"
+	ProjectSection(SolutionItems) = preProject
+		deploy\pipeline\master.yml = deploy\pipeline\master.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "terraform", "terraform", "{B835FCB4-D3D4-4EB4-82B3-749BDD97CC24}"
+	ProjectSection(SolutionItems) = preProject
+		deploy\terraform\main.tf = deploy\terraform\main.tf
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DD957EEE-6D0B-4B43-AE56-4F0D292569DE}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5822CE08-ECE5-485E-8357-03C75B17C465}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5822CE08-ECE5-485E-8357-03C75B17C465}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5822CE08-ECE5-485E-8357-03C75B17C465}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5822CE08-ECE5-485E-8357-03C75B17C465}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{14ED2F59-B324-4EC4-B840-328B00D43779} = {8C3A381E-400A-4BE4-B09E-F86124B8CF59}
+		{B835FCB4-D3D4-4EB4-82B3-749BDD97CC24} = {8C3A381E-400A-4BE4-B09E-F86124B8CF59}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {705140F9-37C4-4E52-9B7C-7388331CC686}
+	EndGlobalSection
+EndGlobal
