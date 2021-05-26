@@ -35,9 +35,6 @@ stages:
         backendAzureRmKey: 'terraform.tfstate'
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/terraform/'
 
-  - job: 
-    displayName: 'Terraform Plan'
-    steps:
     - task: TerraformCLI@0
       displayName: 'plan'
       inputs:
