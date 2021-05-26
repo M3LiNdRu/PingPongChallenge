@@ -7,35 +7,53 @@ pool:
 variables:
   BuildConfiguration: 'Release'
 
-steps:
-- task: UseDotNet@2
-  inputs:
-    version: '3.0.x'
-    packageType: runtime
 
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet restore'
-  inputs:
-    command: 'restore'
-    includeNuGetOrg: true
 
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet build $(BuildConfiguration)'
-  inputs:
-    command: 'build'
-    arguments: '--configuration $(BuildConfiguration)'
+stages:
+- stage: A
+  jobs:
+  - job: A1
+    steps:
+    - task: TerraformInstaller@0
+      displayName: 'Use Terraform latest'
 
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet publish $(BuildConfiguration)'
-  inputs:
-    command: publish
-    publishWebProjects: False
-    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-    zipAfterPublish: True
+    - task: TerraformCLI@0
+      displayName: 'check terraform version'
+      inputs:
+        command: version
 
-# this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
-- task: PublishPipelineArtifact@1
-  displayName: 'publish pipeline artifact'
-  inputs:
-    targetPath: '$(Build.ArtifactStagingDirectory)' 
-    artifactName: 'PingPongChallenge'
+- stage: B
+  jobs:
+  - job: B1
+    steps:
+    - task: UseDotNet@2
+      inputs:
+          version: '3.0.x'
+          packageType: runtime
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet restore'
+      inputs:
+            command: 'restore'
+            includeNuGetOrg: true
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet build $(BuildConfiguration)'
+      inputs:
+            command: 'build'
+            arguments: '--configuration $(BuildConfiguration)'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet publish $(BuildConfiguration)'
+      inputs:
+            command: publish
+            publishWebProjects: False
+            arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+            zipAfterPublish: True
+
+    # this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
+    - task: PublishPipelineArtifact@1
+      displayName: 'publish pipeline artifact'
+      inputs:
+            targetPath: '$(Build.ArtifactStagingDirectory)' 
+            artifactName: 'PingPongChallenge'
