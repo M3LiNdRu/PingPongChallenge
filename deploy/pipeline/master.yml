@@ -8,9 +8,11 @@ variables:
   BuildConfiguration: 'Release'
 
 stages:
-- stage: 'Build infrastructure'
+- stage: 
+  displayName: 'Build infrastructure'
   jobs:
-  - job: 'Terraform Installer'
+  - job: 
+    displayName: 'Terraform Installer'
     steps:
     - task: TerraformInstaller@0
       displayName: 'Use Terraform latest'
@@ -20,7 +22,8 @@ stages:
       inputs:
         command: version
 
-  - job: 'Terraform Init'
+  - job: 
+    displayName: 'Terraform Init'
     steps:
     - task: TerraformCLI@0
       displayName: 'init'
@@ -32,7 +35,8 @@ stages:
         backendAzureRmKey: 'terraform.tfstate'
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/terraform/'
 
-  - job: 'Terraform Plan'
+  - job: 
+    displayName: 'Terraform Plan'
     steps:
     - task: TerraformCLI@0
       displayName: 'plan'
@@ -41,7 +45,8 @@ stages:
         environmentServiceNameAzureRM: ''
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/terraform/'
 
-  - job: 'Terraform Apply'
+  - job: 
+    displayName: 'Terraform Apply'
     steps:
     - task: TerraformCLI@0
       displayName: 'terraform apply'
@@ -51,9 +56,11 @@ stages:
         runAzLogin: true
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/terraform/'
 
-- stage: 'Build'
+- stage: 
+  displayName: 'Build'
   jobs:
-  - job: 'Build & Publish'
+  - job: 
+    displayName: 'Build & Publish'
     steps:
     - task: UseDotNet@2
       inputs:
