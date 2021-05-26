@@ -14,17 +14,19 @@ steps:
     packageType: runtime
 
 - task: DotNetCoreCLI@2
+  displayName: 'dotnet restore'
   inputs:
     command: 'restore'
     includeNuGetOrg: true
 
 - task: DotNetCoreCLI@2
+  displayName: 'dotnet build $(BuildConfiguration)'
   inputs:
     command: 'build'
     arguments: '--configuration $(BuildConfiguration)'
-  displayName: 'dotnet build $(BuildConfiguration)'
 
 - task: DotNetCoreCLI@2
+  displayName: 'dotnet publish $(BuildConfiguration)'
   inputs:
     command: publish
     publishWebProjects: False
@@ -33,6 +35,7 @@ steps:
 
 # this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
 - task: PublishPipelineArtifact@1
+  displayName: 'publish pipeline artifact'
   inputs:
     targetPath: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'PingPongChallenge'
