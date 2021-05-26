@@ -7,12 +7,10 @@ pool:
 variables:
   BuildConfiguration: 'Release'
 
-
-
 stages:
-- stage: A
+- stage: 'Build infrastructure'
   jobs:
-  - job: A1
+  - job: 'Terraform Installer'
     steps:
     - task: TerraformInstaller@0
       displayName: 'Use Terraform latest'
@@ -22,9 +20,40 @@ stages:
       inputs:
         command: version
 
-- stage: B
+  - job: 'Terraform Init'
+    steps:
+    - task: TerraformCLI@0
+      displayName: 'init'
+      inputs:
+        command: init
+        backendAzureRmResourceGroupName: 'Default-Storage-WestEurope'
+        backendAzureRmStorageAccountName: '4acmsstorage'
+        backendAzureRmContainerName: 'terraform'
+        backendAzureRmKey: 'terraform.tfstate'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/terraform/'
+
+  - job: 'Terraform Plan'
+    steps:
+    - task: TerraformCLI@0
+      displayName: 'plan'
+      inputs:
+        command: plan
+        environmentServiceNameAzureRM: ''
+        workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/terraform/'
+
+  - job: 'Terraform Apply'
+    steps:
+    - task: TerraformCLI@0
+      displayName: 'terraform apply'
+      inputs:
+        command: apply
+        environmentServiceName: 'My Azure Service Connection'
+        runAzLogin: true
+        workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/terraform/'
+
+- stage: 'Build'
   jobs:
-  - job: B1
+  - job: 'Build & Publish'
     steps:
     - task: UseDotNet@2
       inputs:
@@ -47,9 +76,9 @@ stages:
       displayName: 'dotnet publish $(BuildConfiguration)'
       inputs:
             command: publish
-            publishWebProjects: False
+            publishWebProjects: false
             arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-            zipAfterPublish: True
+            zipAfterPublish: true
 
     # this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
     - task: PublishPipelineArtifact@1
