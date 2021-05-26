@@ -42,6 +42,7 @@ stages:
       displayName: 'plan'
       inputs:
         command: plan
+        environmentServiceNameAzureRM: '4arreplegats - Azure'
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/terraform/'
 
   - job: 
@@ -51,7 +52,7 @@ stages:
       displayName: 'terraform apply'
       inputs:
         command: apply
-        environmentServiceName: 'My Azure Service Connection'
+        environmentServiceNameAzureRM: '4arreplegats - Azure'
         runAzLogin: true
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/terraform/'
 
