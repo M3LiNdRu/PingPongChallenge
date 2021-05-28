@@ -37,6 +37,7 @@ stages:
       inputs:
         command: 'plan'
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/terraform/'
+        environmentServiceNameAzureRM: '4arreplegats - Azure'
 
   - job: 
     displayName: 'Terraform Apply'
@@ -46,6 +47,7 @@ stages:
       inputs:
         command: 'apply'
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/terraform/'
+        environmentServiceNameAzureRM: '4arreplegats - Azure'
 
 - stage: 
   displayName: 'Build'
