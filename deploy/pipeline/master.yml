@@ -35,6 +35,7 @@ stages:
     - task: TerraformTaskV1@0
       displayName: 'Terraform Plan'
       inputs:
+        provider: 'azurerm'
         command: 'plan'
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/terraform/'
         environmentServiceNameAzureRM: '4arreplegats - Azure'
@@ -45,6 +46,7 @@ stages:
     - task: TerraformTaskV1@0
       displayName: 'Terraform Apply'
       inputs:
+        provider: 'azurerm'
         command: 'apply'
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/terraform/'
         environmentServiceNameAzureRM: '4arreplegats - Azure'
