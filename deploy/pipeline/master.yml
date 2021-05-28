@@ -25,33 +25,31 @@ stages:
   - job: 
     displayName: 'Terraform Init'
     steps:
-    - task: TerraformCLI@0
-      displayName: 'init'
+    - task: TerraformTaskV1@0
+      displayName: "Terraform Init"
       inputs:
-        command: init
+        provider: 'azurerm'
+        command: 'init'
+        backendServiceArm: '4arreplegats - Azure'
         backendAzureRmResourceGroupName: 'Default-Storage-WestEurope'
         backendAzureRmStorageAccountName: '4acmsstorage'
         backendAzureRmContainerName: 'terraform'
         backendAzureRmKey: 'terraform.tfstate'
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/terraform/'
 
-    - task: TerraformCLI@0
-      displayName: 'plan'
+    - task: TerraformTaskV1@0
+      displayName: 'Terraform Plan'
       inputs:
-        command: plan
-        environmentServiceNameAzureRM: '4arreplegats - Azure'
+        command: 'plan'
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/terraform/'
-        runAzLogin: true
 
   - job: 
     displayName: 'Terraform Apply'
     steps:
-    - task: TerraformCLI@0
-      displayName: 'terraform apply'
+    - task: TerraformTaskV1@0
+      displayName: 'Terraform Apply'
       inputs:
-        command: apply
-        environmentServiceNameAzureRM: '4arreplegats - Azure'
-        runAzLogin: true
+        command: 'apply'
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/terraform/'
 
 - stage: 
